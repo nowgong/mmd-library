@@ -53,6 +53,108 @@ footer{margin-top:44px;background:#0b2442;color:#e4edf7;padding:28px 24px}.foot{
 <figure class="photo"><img src="library-attendance.png" alt="Library attendance workstation"><figcaption>Library automation & attendance</figcaption></figure>
 <figure class="photo"><img src="library-front.png" alt="Library building exterior"><figcaption>Library building</figcaption></figure>
 </div></section>
+  
+<!-- Nagaon University Library: Date, Time and Page Views -->
+<div id="library-visitor-info">
+  <div class="visitor-item">
+    <span class="visitor-label">📅 Date</span>
+    <span id="current-date">Loading...</span>
+  </div>
+
+  <div class="visitor-item">
+    <span class="visitor-label">🕒 Current Time (IST)</span>
+    <span id="current-time">Loading...</span>
+  </div>
+
+  <div class="visitor-item">
+    <span class="visitor-label">👁 Page Views</span>
+    <span id="page-views">0</span>
+  </div>
+</div>
+
+<style>
+  #library-visitor-info {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 18px;
+    padding: 15px;
+    margin: 20px auto;
+    max-width: 1000px;
+    background: #f1f6fb;
+    border: 1px solid #d8e4ef;
+    border-radius: 8px;
+    color: #183b60;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+  }
+
+  .visitor-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    min-width: 140px;
+  }
+
+  .visitor-label {
+    font-weight: bold;
+  }
+
+  #current-date,
+  #current-time,
+  #page-views {
+    font-size: 16px;
+    font-weight: 600;
+  }
+</style>
+
+<script>
+(function () {
+  const timeZone = "Asia/Kolkata";
+
+  function updateDateTime() {
+    const now = new Date();
+
+    document.getElementById("current-date").textContent =
+      new Intl.DateTimeFormat("en-IN", {
+        timeZone: timeZone,
+        day: "2-digit",
+        month: "long",
+        year: "numeric"
+      }).format(now);
+
+    document.getElementById("current-time").textContent =
+      new Intl.DateTimeFormat("en-IN", {
+        timeZone: timeZone,
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: true
+      }).format(now);
+  }
+
+  // Counts page loads in this browser only.
+  // It does not count visitors across different devices.
+  try {
+    const key = "nagaon_library_page_views";
+    let views = Number(localStorage.getItem(key) || 0);
+
+    views++;
+    localStorage.setItem(key, views);
+
+    document.getElementById("page-views").textContent =
+      views.toLocaleString("en-IN");
+  } catch (error) {
+    document.getElementById("page-views").textContent =
+      "Unavailable";
+  }
+
+  updateDateTime();
+  setInterval(updateDateTime, 1000);
+})();
+</script>
+
 <section id="contact"><div class="panel"><h3>Contact Nagaon University</h3><p><strong>Address:</strong> Old A.T. Road, Nagaon, Assam – 782001, India</p><p><strong>Telephone:</strong> <a href="tel:+913672291233">03672-291233</a> | <strong>Email:</strong> <a href="mailto:registrar@nagaonuniversity.ac.in">registrar@nagaonuniversity.ac.in</a></p><p>For library membership, circulation, subscribed-resource access and service timings, please contact the University Library directly.</p><a class="btn gold" style="background:var(--navy);color:white" href="https://www.nagaonuniversity.ac.in/index_page_details.php?page=88&amp;title=library" target="_blank" rel="noopener">Visit official library page ↗</a></div></section>
 </main><footer><div class="foot"><div><strong>Nagaon University</strong><p lang="as">নগাঁও বিশ্ববিদ্যালয়</p><p>Mahendranath Maihangdang Dekaphukan Library</p></div><div><p>Official website: <a href="https://www.nagaonuniversity.ac.in/" target="_blank" rel="noopener">nagaonuniversity.ac.in</a></p><p>© Nagaon University. Verify figures and links periodically.</p></div></div></footer>
 </body></html>
